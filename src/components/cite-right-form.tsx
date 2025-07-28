@@ -169,12 +169,15 @@ export default function CiteRightForm() {
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full relative overflow-hidden">
+        <div className="absolute top-2 -right-10 transform rotate-45 bg-primary text-center text-primary-foreground font-semibold py-1 w-32">
+            v0.1
+        </div>
       <CardHeader>
         <CardTitle className="text-3xl font-headline">CiteRight</CardTitle>
         <CardDescription>
-          Generate academic citations with AI. Select your source type, provide
-          the input, and get your BibTeX entry.
+          Generate academically right citations with CiteRight. A quick and easy way to get citations for your research work.
+          Add DOI, URL or pdf and get citation in Bibtex Format.
         </CardDescription>
       </CardHeader>
       <CardContent>
