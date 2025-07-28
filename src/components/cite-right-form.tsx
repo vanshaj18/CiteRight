@@ -220,7 +220,7 @@ export default function CiteRightForm() {
             {isLoading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : null}
-            Fetch Metadata
+            Generate Citation
           </Button>
         </form>
 
