@@ -35,7 +35,22 @@ const generateBibtexPrompt = ai.definePrompt({
   name: 'generateBibtexPrompt',
   input: {schema: GenerateBibtexInputSchema},
   output: {schema: GenerateBibtexOutputSchema},
-  prompt: `You are a citation generator that generates BibTeX entries from various input types, adhering to a specific citation style.
+  prompt: `You are a citation generation assistant. Your task is to output BibTeX entries formatted according to the specified citation style. You will receive metadata (e.g., title, author, year, journal, etc.) and a target citation style.
+
+  You must:
+  1. Generate a valid BibTeX entry.
+  2. Format fields according to the target citation style's conventions.
+  3. Use consistent BibTeX keys based on author+year+short title.
+  4. Support common types: @article, @techreport, @inproceedings, @book, @misc.
+
+  Citation styles supported:
+  - APA
+  - IEEE
+  - ACM
+  - Chicago
+  - MLA
+
+  If data is missing, use placeholder values (e.g., {Unknown}). Keep BibTeX fields present even if they are empty.
 
   Input Type: {{{inputType}}}
   Citation Style: {{{citationStyle}}}
@@ -43,6 +58,63 @@ const generateBibtexPrompt = ai.definePrompt({
 
   Generate a BibTeX entry based on the provided input. Ensure the BibTeX entry is accurate and well-formatted.
   Return ONLY a valid BibTeX entry.
+  
+  Examples: 
+  
+  * APA style
+      @article{ {{key}},
+      author      = {{author}},
+      title       = {{title}},
+      journal     = {{journal}},
+      year        = {{year}},
+      month       = {{month}},
+      institution = {{institution}},
+      url         = {{url}}
+    }
+
+
+  * IEEE style
+      @article{ {{key}},
+      author      = {{author}},
+      title       = {{title}},
+      journal     = {{journal}},
+      year        = {{year}},
+      institution = {{institution}},
+      note        = {Accessed: {{month}} {{year}}. [Online]. Available: {{url}}}
+    }
+
+  * ACM Style 
+      @article{ {{key}},
+      author  = {{author}},
+      title   = {{title}},
+      journal = {{journal}},
+      year    = {{year}},
+      month   = {{month}},
+      note    = {{institution}},
+      url     = {{url}}
+    }
+
+  * Chicago style
+      @techreport{ {{key}},
+      author      = {{author}},
+      title       = {{title}},
+      institution = {{institution}},
+      year        = {{year}},
+      month       = {{month}},
+      note        = {{note}},
+      url         = {{url}}
+    }
+
+
+  * MLA Style
+      @misc{ {{key}},
+        author       = {{author}},
+        title        = {{title}},
+        year         = {{year}},
+        howpublished = {{url}},
+        note         = {{institution}}, Case Study
+      }
+
   `,
 });
 
