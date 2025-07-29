@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -259,6 +260,13 @@ export default function CiteRightForm() {
         )}
 
       </CardContent>
+      <CardFooter>
+        <p className="text-xs text-muted-foreground">
+          API Rate Limit: 15 requests per min. <br/>
+          Token Limit: 1,000,000 tokens per min. <br/>
+          Requests: 200 requests per day
+        </p>
+      </CardFooter>
     </Card>
   );
 }
