@@ -100,7 +100,7 @@ export default function CiteRightForm() {
         return;
       }
     } else if (!finalInput.trim()) {
-      setError("Please enter a value for the selected input type.");
+      setError(`Please enter a valid ${inputType.toUpperCase()} for the ${inputType.toUpperCase()} type.`);
       setIsLoading(false);
       return;
     }
@@ -199,7 +199,7 @@ export default function CiteRightForm() {
             </TabsList>
           </Tabs>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div className="md:col-span-2">{renderInput()}</div>
             
             <div className="grid w-full items-center gap-1.5">
@@ -243,7 +243,7 @@ export default function CiteRightForm() {
                 <h3 className="text-lg font-semibold">BibTeX Output</h3>
                 <div className="relative rounded-md bg-muted/50 p-4">
                     <Button
-                        variant="accent"
+                        variant="ghost"
                         size="icon"
                         className="absolute top-2 right-2 h-8 w-8"
                         onClick={handleCopy}

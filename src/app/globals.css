@@ -2,13 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 270 100% 10%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -34,8 +30,9 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
-    --background: 255 54% 13%;
+    --background: 247 32% 41%;
     --foreground: 0 0% 98%;
     --card: 255 54% 16%;
     --card-foreground: 0 0% 98%;
@@ -60,13 +57,13 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
+    font-family: Arial, Helvetica, sans-serif;
     @apply bg-background text-foreground;
   }
 }
