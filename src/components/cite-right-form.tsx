@@ -37,6 +37,8 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import { DiGithubAlt } from "react-icons/di";
+
 
 type InputType = "doi" | "url" | "pdf";
 type CitationStyle = "APA" | "IEEE" | "ACM" | "Chicago" | "MLA";
@@ -172,7 +174,7 @@ export default function CiteRightForm() {
   return (
     <Card className="w-full relative overflow-hidden">
         <div className="absolute top-2 -right-10 transform rotate-45 bg-primary text-center text-primary-foreground font-semibold py-1 w-32">
-            v0.1
+            v0.1.1
         </div>
       <CardHeader>
         <CardTitle className="text-3xl font-headline">CiteRight</CardTitle>
@@ -267,6 +269,10 @@ export default function CiteRightForm() {
           Requests: 200 requests per day
         </p>
       </CardFooter>
+     <div className="absolute bottom-3 -right-9 transform rotate-[-45deg] bg-primary flex items-center justify-center text-primary-foreground font-semibold py-1 px-3 w-32 hover:bg-primary/90 transition">
+        <a href="https://github.com/vanshaj18" target="_blank" className="flex items-center">Github <DiGithubAlt className="text-black"/> </a>
+      </div>
+
     </Card>
   );
 }
