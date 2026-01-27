@@ -68,19 +68,27 @@ export default function CiteRightForm() {
       setFileName(file.name);
       const reader = new FileReader();
       reader.onload = (event) => {
-        const text = event.target?.result;
-        if (typeof text === "string") {
-            setInputValue(text);
-        } else if (text instanceof ArrayBuffer) {
-            const decoder = new TextDecoder('utf-8');
-            setInputValue(decoder.decode(text));
+        const result = event.target?.result;
+        if (result instanceof ArrayBuffer) {
+          // Convert ArrayBuffer to base64 string for PDF
+          const bytes = new Uint8Array(result);
+          let binary = '';
+          for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          const base64 = btoa(binary);
+          setInputValue(base64);
+        } else if (typeof result === "string") {
+          // If already a string (shouldn't happen for PDFs, but handle it)
+          setInputValue(result);
         }
       };
       reader.onerror = () => {
         setError("Failed to read the file.");
         setFileName("");
       }
-      reader.readAsText(file);
+      // Read PDF as ArrayBuffer, then convert to base64
+      reader.readAsArrayBuffer(file);
     }
   };
 
@@ -108,8 +116,10 @@ export default function CiteRightForm() {
       return;
     }
 
+    // Show loader while waiting for response
+    setIsLoading(true);
     const response = await getBibtex({
-      inputType,
+      inputType, // doi, url, pdf
       citationStyle,
       input: finalInput,
     });
@@ -144,8 +154,8 @@ export default function CiteRightForm() {
             type="file"
             ref={fileInputRef}
             onChange={handleFileChange}
-            accept=".pdf"
-            className="file:text-primary-foreground file:font-semibold"
+            accept=".pdf | .docx"
+            className="file:text-white file:font-semibold file:cursor-pointer file:bg-primary-foreground file:rounded"
             disabled={isLoading}
           />
           {fileName && <p className="text-sm text-muted-foreground truncate" title={fileName}>{fileName}</p>}
@@ -174,7 +184,7 @@ export default function CiteRightForm() {
   return (
     <Card className="w-full relative overflow-hidden">
         <div className="absolute top-2 -right-10 transform rotate-45 bg-primary text-center text-primary-foreground font-semibold py-1 w-32">
-            v0.1.1
+            v0.2.1
         </div>
       <CardHeader>
         <CardTitle className="text-3xl font-headline">CiteRight</CardTitle>
@@ -264,9 +274,9 @@ export default function CiteRightForm() {
       </CardContent>
       <CardFooter>
         <p className="text-xs text-muted-foreground">
-          API Rate Limit: 15 requests per min. <br/>
-          Token Limit: 1,000,000 tokens per min. <br/>
-          Requests: 200 requests per day
+          API Rate Limits: <br/>
+          30 requests/min • 1,000 requests/day <br/>
+          30K tokens/min • 500K tokens/day
         </p>
       </CardFooter>
      <div className="absolute bottom-3 -right-9 transform rotate-[-45deg] bg-primary flex items-center justify-center text-primary-foreground font-semibold py-1 px-3 w-32 hover:bg-primary/90 transition">
