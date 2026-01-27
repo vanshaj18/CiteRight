@@ -3,7 +3,11 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, value, ...props }, ref) => {
+    // File inputs are uncontrolled and should not have a value prop
+    // For other inputs, ensure value is always a string to prevent controlled/uncontrolled warning
+    const isFileInput = type === 'file';
+    
     return (
       <input
         type={type}
@@ -12,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           className
         )}
         ref={ref}
-        {...props}
+        {...(isFileInput ? props : { ...props, value: value ?? '' })}
       />
     )
   }
